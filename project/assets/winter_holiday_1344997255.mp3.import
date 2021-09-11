@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/winter_holiday_1344997255.mp3-39a53a67ef70f2000404498f904ef00f.mp3str"
+
+[deps]
+
+source_file="res://assets/winter_holiday_1344997255.mp3"
+dest_files=[ "res://.import/winter_holiday_1344997255.mp3-39a53a67ef70f2000404498f904ef00f.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

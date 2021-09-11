@@ -1,0 +1,107 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/snowglobe.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/snowglobe_shadow.png" type="Texture" id=2]
+[ext_resource path="res://assets/winter_holiday_1344997255.mp3" type="AudioStream" id=3]
+[ext_resource path="res://assets/snowglobe_bg.png" type="Texture" id=4]
+[ext_resource path="res://scripts/scene.gd" type="Script" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "shake_snowglobe"
+length = 1.25
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.38, 0.46, 0.54, 0.62, 0.7, 0.78, 0.86, 1.05 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -18, 334 ), Vector2( -18, 334 ), Vector2( -48, 134 ), Vector2( 12, 134 ), Vector2( -48, 134 ), Vector2( 12, 134 ), Vector2( -48, 134 ), Vector2( 12, 134 ), Vector2( -48, 134 ), Vector2( -18, 134 ), Vector2( -18, 334 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("pivot:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.38, 0.46, 0.54, 0.62, 0.7, 0.78, 0.86, 0.94 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, -30.0, 30.0, -30.0, 30.0, -30.0, 30.0, -30.0, 30.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("pivot:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.86, 1.05, 1.15, 1.25 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 0.5 ), Vector2( 0.5, 1 ), Vector2( 1.1, 1 ), Vector2( 1.1, 1 ), Vector2( 0.5, 1 ), Vector2( 1, 0.5 ), Vector2( 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("shadow:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.1, 0.17, 0.98, 1.05 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("shadow:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.05, 0.09, 0.17, 0.3, 0.86, 1.05, 1.16, 1.2, 1.25 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.9, 1 ), Vector2( 0.892857, 1 ), Vector2( 0.5, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 0.5, 1 ), Vector2( 0.892857, 1 ), Vector2( 0.9, 1 ), Vector2( 1, 1 ) ]
+}
+
+[node name="scene" type="Node2D"]
+modulate = Color( 1, 0.976471, 0.909804, 1 )
+position = Vector2( 240, 180 )
+scale = Vector2( 0.5, 0.5 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 185.0, 268.0, 180.0, 347.0 ],
+"_edit_lock_": true,
+"_edit_vertical_guides_": [ 231.0, 240.0 ]
+}
+
+[node name="background" type="Sprite" parent="."]
+texture = ExtResource( 4 )
+
+[node name="shadow" type="Sprite" parent="."]
+position = Vector2( 0, 360 )
+texture = ExtResource( 2 )
+offset = Vector2( 0, -360 )
+
+[node name="pivot" type="Node2D" parent="."]
+position = Vector2( -18, 334 )
+
+[node name="snowglobe" parent="pivot" instance=ExtResource( 1 )]
+position = Vector2( 0, -324 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 0.7
+anims/shake_snowglobe = SubResource( 1 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+autoplay = true
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
